@@ -34,7 +34,10 @@ class YetkiUser {
 
   /// Creates a user from JSON.
   factory YetkiUser.fromJson(Map<String, dynamic> json) {
-    final user = YetkiUser(id: json['id'] as String, name: json['name'] as String);
+    final user = YetkiUser(
+      id: json['id'] as String,
+      name: json['name'] as String,
+    );
 
     if (json.containsKey('roleIds')) {
       final roles = json['roleIds'] as List;

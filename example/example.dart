@@ -171,7 +171,9 @@ void main() async {
   print('Is contributor: ${yetki.hasRole(contributorRole.id)}');
   print('Is editor: ${yetki.hasRole(editorRole.id)}');
   print('Is admin: ${yetki.hasRole(adminRole.id)}');
-  print('Has any editor/admin role: ${yetki.hasAnyRole([editorRole.id, adminRole.id])}');
+  print(
+    'Has any editor/admin role: ${yetki.hasAnyRole([editorRole.id, adminRole.id])}',
+  );
 
   print('\n=== Serialization Example ===');
 
@@ -188,7 +190,9 @@ void main() async {
   print('- ${newYetki.getAllRoles().length} roles');
 
   print('\n=== Cache Example ===');
-  print('The permissions and roles are automatically cached with shared_preferences');
+  print(
+    'The permissions and roles are automatically cached with shared_preferences',
+  );
   print('When restarting the app, they will be loaded from cache');
   print('To clear the cache: await yetki.clearCache()');
 
@@ -199,7 +203,9 @@ void main() async {
   final singletonYetki2 = Yetki(useSingleton: true);
 
   print('Using singleton mode:');
-  print('Instances are identical: ${identical(singletonYetki1, singletonYetki2)}');
+  print(
+    'Instances are identical: ${identical(singletonYetki1, singletonYetki2)}',
+  );
 
   // Clear the singleton instance for testing
   Yetki.clearInstance();

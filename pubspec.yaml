@@ -1,7 +1,7 @@
 name: yetki
 description: A flexible Role Based Access Control (RBAC) library for Dart and Flutter applications
 repository: https://github.com/envererdem18/yetki
-version: 0.0.2
+version: 0.1.0
 
 environment:
   sdk: ^3.7.2

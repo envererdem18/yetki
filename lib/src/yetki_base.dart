@@ -65,7 +65,9 @@ class Yetki {
   /// Throws [YetkiException] if permission with the same id already exists
   Permission addPermission(Permission permission) {
     if (_permissions.containsKey(permission.id)) {
-      throw YetkiException('Permission with id ${permission.id} already exists');
+      throw YetkiException(
+        'Permission with id ${permission.id} already exists',
+      );
     }
 
     _permissions[permission.id] = permission;

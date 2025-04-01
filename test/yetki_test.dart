@@ -28,7 +28,10 @@ void main() {
     });
 
     test('Remove permission', () {
-      final permission = Permission(id: 'test_permission', name: 'Test Permission');
+      final permission = Permission(
+        id: 'test_permission',
+        name: 'Test Permission',
+      );
 
       yetki.addPermission(permission);
       expect(yetki.getPermission('test_permission'), isNotNull);
@@ -39,11 +42,17 @@ void main() {
     });
 
     test('Cannot add duplicate permission', () {
-      final permission = Permission(id: 'test_permission', name: 'Test Permission');
+      final permission = Permission(
+        id: 'test_permission',
+        name: 'Test Permission',
+      );
 
       yetki.addPermission(permission);
 
-      expect(() => yetki.addPermission(permission), throwsA(isA<YetkiException>()));
+      expect(
+        () => yetki.addPermission(permission),
+        throwsA(isA<YetkiException>()),
+      );
     });
 
     test('Get all permissions', () {
@@ -68,7 +77,11 @@ void main() {
     });
 
     test('Add and retrieve role', () {
-      final role = Role(id: 'test_role', name: 'Test Role', description: 'A test role');
+      final role = Role(
+        id: 'test_role',
+        name: 'Test Role',
+        description: 'A test role',
+      );
 
       yetki.addRole(role);
       final retrieved = yetki.getRole('test_role');
@@ -239,11 +252,20 @@ void main() {
       user.assignRole(editorRole.id);
       yetki.setUser(user);
 
-      expect(yetki.hasAllPermissions([viewPermission.id, createPermission.id]), isTrue);
+      expect(
+        yetki.hasAllPermissions([viewPermission.id, createPermission.id]),
+        isTrue,
+      );
 
-      expect(yetki.hasAllPermissions([viewPermission.id, deletePermission.id]), isFalse);
+      expect(
+        yetki.hasAllPermissions([viewPermission.id, deletePermission.id]),
+        isFalse,
+      );
 
-      expect(yetki.hasAnyPermission([deletePermission.id, viewPermission.id]), isTrue);
+      expect(
+        yetki.hasAnyPermission([deletePermission.id, viewPermission.id]),
+        isTrue,
+      );
 
       expect(yetki.hasAnyPermission(['nonexistent1', 'nonexistent2']), isFalse);
     });
