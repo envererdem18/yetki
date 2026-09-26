@@ -2,162 +2,24 @@
 
 # Yetki
 
-A flexible Role Based Access Control (RBAC) library for Dart and Flutter applications.
+Role-based access control (RBAC) for Dart and Flutter.
 
-## Features
+| Package | Description |
+| --- | --- |
+| [`yetki`](packages/yetki) [![pub](https://img.shields.io/pub/v/yetki.svg)](https://pub.dev/packages/yetki) | Pure Dart core: permissions, roles with inheritance, wildcard grants, persistence and change notifications. |
+| [`yetki_flutter`](packages/yetki_flutter) [![pub](https://img.shields.io/pub/v/yetki_flutter.svg)](https://pub.dev/packages/yetki_flutter) | Flutter bindings: `YetkiScope`, guard widgets, a router `Listenable` and shared_preferences storage. |
 
-- 🔑 Simple and intuitive role-based access control
-- 🔄 Support for hierarchical permissions
-- 💾 Optional caching with shared_preferences
-- 🧩 Flexible singleton pattern support
-- 📦 Easy serialization and deserialization
-- 🛠️ Customizable for various use cases
+Upgrading from 0.1.x? See the
+[migration guide](packages/yetki/README.md#migration-from-01x).
 
-## Installation
+## Development
 
-Add the package to your pubspec.yaml:
-
-```yaml
-dependencies:
-  yetki: ^0.1.0
-```
-
-Then run:
+This repository is a [pub workspace](https://dart.dev/tools/pub/workspaces).
 
 ```bash
-dart pub get
-```
-
-## Basic Usage
-
-```dart
-import 'package:yetki/yetki.dart';
-
-void main() {
-  // Create a new Yetki instance
-  final yetki = Yetki();
-  
-  // Create permissions
-  final viewUsers = Permission(id: 'view_users', name: 'View Users');
-  final createUsers = Permission(id: 'create_users', name: 'Create Users');
-  final editUsers = Permission(id: 'edit_users', name: 'Edit Users');
-  final deleteUsers = Permission(id: 'delete_users', name: 'Delete Users');
-  
-  // Add permissions to the system
-  yetki.addPermission(viewUsers);
-  yetki.addPermission(createUsers);
-  yetki.addPermission(editUsers);
-  yetki.addPermission(deleteUsers);
-  
-  // Create roles
-  final viewerRole = Role(
-    id: 'viewer', 
-    name: 'Viewer',
-    description: 'Can only view resources',
-  );
-  viewerRole.addPermission(viewUsers.id);
-  
-  final editorRole = Role(
-    id: 'editor', 
-    name: 'Editor',
-    description: 'Can view and edit resources',
-  );
-  editorRole.addPermission(viewUsers.id);
-  editorRole.addPermission(createUsers.id);
-  editorRole.addPermission(editUsers.id);
-  
-  final adminRole = Role(
-    id: 'admin', 
-    name: 'Administrator',
-    description: 'Has full access to all resources',
-  );
-  adminRole.addPermission(viewUsers.id);
-  adminRole.addPermission(createUsers.id);
-  adminRole.addPermission(editUsers.id);
-  adminRole.addPermission(deleteUsers.id);
-  
-  // Add roles to the system
-  yetki.addRole(viewerRole);
-  yetki.addRole(editorRole);
-  yetki.addRole(adminRole);
-  
-  // Create and set a user
-  final user = YetkiUser(
-    id: 'user123',
-    name: 'John Doe',
-  );
-  user.assignRole(editorRole.id);
-  
-  yetki.setUser(user);
-  
-  // Check permissions
-  print(yetki.hasPermission(viewUsers.id));    // true
-  print(yetki.hasPermission(createUsers.id));  // true
-  print(yetki.hasPermission(editUsers.id));    // true
-  print(yetki.hasPermission(deleteUsers.id));  // false
-  
-  // Check roles
-  print(yetki.hasRole(viewerRole.id));         // false
-  print(yetki.hasRole(editorRole.id));         // true
-  print(yetki.hasRole(adminRole.id));          // false
-}
-```
-
-## Advanced Features
-
-### Using Singleton Pattern
-
-```dart
-// Create with singleton enabled
-final yetki1 = Yetki(useSingleton: true);
-
-// This will return the same instance
-final yetki2 = Yetki(useSingleton: true);
-
-print(identical(yetki1, yetki2));  // true
-```
-
-### Working with Caching
-
-```dart
-// Create with caching enabled (default)
-final yetki = Yetki(useCache: true);
-
-// Permissions and roles will be automatically cached
-// and restored when the app restarts
-
-// To clear the cache
-await yetki.clearCache();
-```
-
-### Direct Permissions for Users
-
-```dart
-final user = YetkiUser(
-  id: 'user123',
-  name: 'John Doe',
-);
-
-// Assign roles
-user.assignRole('editor');
-
-// Grant direct permissions
-user.grantDirectPermission('special_permission');
-
-yetki.setUser(user);
-
-// Check direct permission
-print(user.hasDirectPermission('special_permission'));  // true
-```
-
-### Exporting and Importing Data
-
-```dart
-// Export all permissions and roles to JSON
-final jsonData = yetki.exportToJson();
-
-// Import from JSON (useful for initialization)
-yetki.importFromJson(jsonData);
+flutter pub get                    # resolves both packages
+(cd packages/yetki && dart test)
+(cd packages/yetki_flutter && flutter test)
 ```
 
 ## API Reference
