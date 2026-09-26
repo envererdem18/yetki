@@ -1,0 +1,30 @@
+name: yetki_flutter
+description: >-
+  Flutter bindings for the yetki RBAC library: scope, permission and role
+  guard widgets, a router refresh listenable and shared_preferences storage.
+version: 0.1.0
+repository: https://github.com/envererdem18/yetki/tree/main/packages/yetki_flutter
+issue_tracker: https://github.com/envererdem18/yetki/issues
+topics:
+  - rbac
+  - permissions
+  - authorization
+  - access-control
+  - roles
+
+environment:
+  sdk: ^3.8.0
+  flutter: ">=3.32.0"
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+  shared_preferences: ^2.5.3
+  yetki: ^0.2.0
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter

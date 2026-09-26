@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The oldest supported Flutter (Dart 3.8) and the latest stable.
+        flutter-version: ["3.32.0", ""]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ matrix.flutter-version }}
+          cache: true
+      - run: flutter pub get
+
+      - name: Format
+        # Formatter output can differ between SDK releases.
+        if: matrix.flutter-version == ''
+        run: dart format --output=none --set-exit-if-changed packages
+
+      - name: Analyze
+        run: |
+          (cd packages/yetki && dart analyze --fatal-infos)
+          (cd packages/yetki_flutter && flutter analyze --fatal-infos)
+
+      - name: Test
+        run: |
+          (cd packages/yetki && dart test)
+          (cd packages/yetki_flutter && flutter test)
+
+      - name: Publish dry run
+        if: matrix.flutter-version == ''
+        run: |
+          (cd packages/yetki && dart pub publish --dry-run)
+          (cd packages/yetki_flutter && flutter pub publish --dry-run)

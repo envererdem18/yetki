@@ -1,0 +1,22 @@
+name: yetki
+description: >-
+  Role-based access control (RBAC) for Dart: role inheritance, wildcard
+  permissions, pluggable persistence and change notifications.
+version: 0.2.0
+repository: https://github.com/envererdem18/yetki/tree/main/packages/yetki
+issue_tracker: https://github.com/envererdem18/yetki/issues
+topics:
+  - rbac
+  - permissions
+  - authorization
+  - access-control
+  - roles
+
+environment:
+  sdk: ^3.8.0
+
+resolution: workspace
+
+dev_dependencies:
+  lints: ^6.1.0
+  test: ^1.26.0
