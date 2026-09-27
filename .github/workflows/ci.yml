@@ -22,6 +22,12 @@ jobs:
           cache: true
       - run: flutter pub get
 
+      - name: Ensure tools left the tree unchanged
+        # Newer Flutter versions migrate files such as analysis_options.yaml
+        # during `pub get`. Commit those changes instead of publishing from a
+        # dirty tree.
+        run: git diff --exit-code
+
       - name: Format
         # Formatter output can differ between SDK releases.
         if: matrix.flutter-version == ''
